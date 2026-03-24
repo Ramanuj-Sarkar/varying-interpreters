@@ -16,7 +16,8 @@ def run_bf(code: str, textfile=False, starting_input='') -> None:
         if char == '[':
             bracket_stack.append(num)
         elif char == ']':
-            assert len(bracket_stack) > 0, 'unmatched ]'
+            if len(bracket_stack) <= 0:
+                return ValueError('unmatched ]')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
@@ -29,7 +30,8 @@ def run_bf(code: str, textfile=False, starting_input='') -> None:
             if location == len(tape):
                 tape.append(0)
         elif code[pointer] == '<':
-            assert location > 0, 'Cannot move left from position 0'
+            if location <= 0:
+                raise ValueError('Cannot move left from position 0')
             location -= 1
         elif code[pointer] == '+':
             tape[location] = (tape[location] + 1) % 256
