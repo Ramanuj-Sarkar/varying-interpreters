@@ -21,7 +21,7 @@ def run_bf(code: str, textfile=False, starting_input='') -> None:
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
-    if len(bracket_stack) == 0:
+    if len(bracket_stack) != 0:
         raise ValueError('unmatched [')
 
     while pointer < len(code):
