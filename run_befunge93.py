@@ -17,10 +17,12 @@ def run_befunge(code_string: str, file_name: True):
     else:
         running = code_string.split('\n')
 
-    assert len(running) <= 25, "The height of the playfield cannot exceed 25 characters."
+    if len(running) > 25:
+        raise ValueError("The height of the playfield cannot exceed 25 characters.")
 
     for line in running:
-        assert len(line) <= 80, "The width of the playfield cannot exceed 80 characters."
+        if len(line) > 80:
+            raise ValueError("The width of the playfield cannot exceed 80 characters.")
 
     direction = '>'
     direction_string = 'v<^>'
@@ -49,7 +51,8 @@ def run_befunge(code_string: str, file_name: True):
             elif char in {'&', '~'}:
                 result = input() # does not support multiple character inputs
                 if char == '&':
-                    assert result.isdigit(), "This must be an integer."
+                    if not result.isdigit():
+                        raise ValueError("Input of & must be an integer.")
                     stack.append(int(result))
                 else:
                     stack.append(ord(result[0]))
