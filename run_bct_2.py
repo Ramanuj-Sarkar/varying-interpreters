@@ -1,10 +1,10 @@
 # runs language from https://esolangs.org/wiki/Bitwise_Cyclic_Tag
 def run_bct_2(program: str, data: str) -> None:
     # Will not operate on strings which contain non-bits
-    assert set(program).issubset({'0','1'}),\
-        "The input strings must contain only 0 and 1. The program string contains at least one illegal bit."
-    assert set(data).issubset({'0', '1'}),\
-        "The input strings must contain only 0 and 1. The data string contains at least one illegal bit."
+    if not set(program).issubset({'0','1'}):
+        raise ValueError("The input strings must contain only 0 and 1. The program string contains at least one illegal bit.")
+    if not set(data).issubset({'0', '1'}):
+        raise ValueError("The input strings must contain only 0 and 1. The data string contains at least one illegal bit.")
     # padding for print statements
     padding = ""
     # allows you to step through the program
