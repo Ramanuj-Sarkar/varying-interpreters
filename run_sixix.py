@@ -41,13 +41,13 @@ def run_sixix(method="input"):
 
             # goto_num must consist of digits to become an int
             # this also rules out all negative numbers
-            assert goto_num.isdigit(),\
-                f"Goto Error at line {pointer+1}: goto does not have a corresponding number."
+            if not goto_num.isdigit():
+                raise ValueError(f"Goto Error at line {pointer+1}: goto does not have a corresponding number.")
             goto_num = int(goto_num)
 
             # goto_num must be within these bounds to work
-            assert 1 <= goto_num <= len(code)+1,\
-                f"Goto Error at Line {pointer}: The goto points to a line which doesn't exist."
+            if not 1 <= goto_num <= len(code)+1:
+                raise ValueError(f"Goto Error at Line {pointer}: The goto points to a line which doesn't exist.")
             pointer = int(goto_num) - 2
         elif "print" == code[pointer][:5]:
             # the string must be analysed
@@ -59,8 +59,8 @@ def run_sixix(method="input"):
             # so it cannot be analysed using the function
             input_var = code[pointer][5:].strip(" ")
             # the variable cannot be blank
-            assert len(input_var) > 0,\
-                f"Input Error at line {pointer+1}: variable is not being assigned."
+            if len(input_var) <= 0:
+                raise SyntaxError(f"Input Error at line {pointer+1}: variable is not being assigned.")
             variable_names[input_var] = input("Input a variable:")
         elif "var" == code[pointer][:3]:
             # this strips the code of spaces at the end
@@ -68,8 +68,8 @@ def run_sixix(method="input"):
             equals = code[pointer][3:].strip(" ").split("=", 1)
 
             # this is in case there is no equals sign
-            assert len(equals) == 2,\
-                f"Var Error at line {pointer+1}: var is not being assigned."
+            if len(equals) != 2:
+                raise SyntaxError(f"Var Error at line {pointer+1}: var is not being assigned.")
             equals = [x.strip(" ") for x in equals]
 
             # the first argument is already a variable by default
