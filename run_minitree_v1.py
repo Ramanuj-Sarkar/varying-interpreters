@@ -8,7 +8,8 @@ def output_preorder(upper, start=1):
 
 
 def run_minitree(code, input_mode='tree'):
-    assert input_mode in ('tree', 'linear'), 'The only valid input modes are tree and linear.'
+    if input_mode not in ('tree', 'linear'):
+        raise ValueError('The only valid input modes are tree and linear.')
 
     valid_instructions = ('<', '>', '^', '+', '-', '.', ',', '[', ']')
     code_tree = [inst for inst in code if inst in valid_instructions]
@@ -35,11 +36,13 @@ def run_minitree(code, input_mode='tree'):
         if code_tree[position] == '[':
             bracket_stack.append(num)
         elif code_tree[position] == ']':
-            assert len(bracket_stack) > 0, 'unmatched ]'
+            if len(bracket_stack) <= 0:
+                raise ValueError('unmatched ]')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
-    assert len(bracket_stack) == 0, 'unmatched ['
+    if len(bracket_stack) != 0:
+        raise ValueError('unmatched [')
 
     while cp < len(iteration_order):
         inst = code_tree[iteration_order[cp]]
@@ -52,7 +55,8 @@ def run_minitree(code, input_mode='tree'):
             if dp > len(data_tree):
                 data_tree += [0] * (dp - len(data_tree))
         elif inst == '^':
-            assert dp != 1, 'Cannot move up from root'
+            if dp == 1:
+                raise ValueError('Cannot move up from root')
             dp //= 2
         elif inst == '+':
             data_tree[dp - 1] = (data_tree[dp - 1] + 1) % 256
