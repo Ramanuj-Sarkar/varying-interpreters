@@ -6,7 +6,8 @@ def run_newlang(rawcode: str, textfile=False) -> None:
     tape = [0]
 
     if textfile:
-        code = [char for char in open(f'{rawcode}', 'r').readlines() if char in set('I~O!*%()')]
+        with open(rawcode, 'r') as s:
+            code = [char for char in ''.join(s.readlines()) if char in set('I~O!*%()')]
     else:
         code = [char for char in rawcode if char in set('I~O!*%()')]
 
