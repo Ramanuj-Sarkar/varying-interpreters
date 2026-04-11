@@ -20,7 +20,8 @@ def run_ttttt(data: str, textfile=False) -> None:
             in_comment = True
             comment_stack.append(num)
         elif char == 'l':
-            assert len(comment_stack) > 0, 'unmatched l'
+            if len(comment_stack) <= 0:
+                raise ValueError('unmatched l')
             corresponding_thing[num] = comment_stack[-1]
             corresponding_thing[comment_stack[-1]] = num
             comment_stack.pop()
@@ -29,12 +30,15 @@ def run_ttttt(data: str, textfile=False) -> None:
             if char == 'i':
                 loop_stack.append(num)
             elif char == 'j':
-                assert len(loop_stack) > 0, 'unmatched j'
+                if len(loop_stack) <= 0:
+                    raise ValueError('unmatched j')
                 corresponding_thing[num] = loop_stack[-1]
                 corresponding_thing[loop_stack[-1]] = num
                 loop_stack.pop()
-    assert len(loop_stack) == 0, 'unmatched i'
-    assert len(comment_stack) == 0, 'unmatched k'
+    if len(loop_stack) != 0:
+        raise ValueError('unmatched i')
+    if len(comment_stack) != 0:
+        raise ValueError('unmatched k')
 
     while pointer < len(code):
         if 'a' == code[pointer]:
