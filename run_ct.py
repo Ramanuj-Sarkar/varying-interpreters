@@ -1,10 +1,12 @@
 # runs language under CT from https://esolangs.org/wiki/Bitwise_Cyclic_Tag
+# the idea is that the program uses 0, 1, and ;
+# while the data itself is the same as BCT
 def run_ct(program: str, data: str) -> None:
     # Will not operate on strings which contain non-bits
-    assert set(program).issubset({'0', '1', ';'}),\
-        "The input strings must contain only 0, 1, and ;. The program string contains at least one illegal trit."
-    assert set(data).issubset({'0', '1'}),\
-        "The input strings must contain only 0, 1, and ;. The data string contains at least one illegal trit."
+    if not set(program).issubset({'0', '1', ';'}):
+        raise ValueError("The input strings must contain only 0, 1, and ;. The program string contains at least one illegal character.")
+    if not set(data).issubset({'0', '1'}):
+        raise ValueError("The data string must contain only 0 and 1. The data string contains at least one illegal character.")
     # padding for print statements
     padding = ""
     # allows you to step through the program
