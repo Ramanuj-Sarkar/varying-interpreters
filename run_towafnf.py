@@ -18,7 +18,7 @@ def run_towafnf(code_str: str, textfile=False):
             bracket_stack.append(num)
         elif word == 'Fred':
             if len(bracket_stack) <= 0:
-                return ValueError('unmatched "Fred"')
+                raise ValueError('unmatched "Fred"')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
