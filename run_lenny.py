@@ -12,11 +12,13 @@ def run_lenny(code: str, actually_run = False) -> None:
         if code[num:num+5] == '( ͡°(':
             bracket_stack.append(num)
         elif code[num:num+5] == ') ͡°)':
-            assert len(bracket_stack) > 0, 'unmatched ) ͡°)'
+            if len(bracket_stack) <= 0:
+                raise ValueError('unmatched ) ͡°)')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
-    assert balance == 0, 'unmatched ( ͡°('
+    if balance != 0:
+        raise ValueError('unmatched ( ͡°(')
 
     while pointer < len(code):
         skip = 1
@@ -28,7 +30,7 @@ def run_lenny(code: str, actually_run = False) -> None:
             skip = 11
         elif code[pointer:pointer+18] == '(∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ.*':
             column -= 1
-            if column < 0:
+            if column < 0:  # I've decided you CAN do this, actually
                 for row_number in range(len(tape)):
                     tape[row_number] = [0] + tape[row_number]
                 column += 1
