@@ -17,7 +17,7 @@ def run_bfp3(code: str, textfile=False) -> None:
             bracket_stack.append(num)
         elif char == ']':
             if len(bracket_stack) <= 0:
-                return ValueError('unmatched ]')
+                raise ValueError('unmatched ]')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
