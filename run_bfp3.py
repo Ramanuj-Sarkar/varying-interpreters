@@ -11,15 +11,18 @@ def run_bfp3(code: str, textfile=False) -> None:
 
     corresponding_bracket = {}  # dictionary where the values are the corresponding bracket positions of the keys
     bracket_stack = []  # acts as a stack for the last bracket
+
     for num, char in enumerate(code):
         if char == '[':
             bracket_stack.append(num)
         elif char == ']':
-            assert len(bracket_stack) > 0, 'unmatched ]'
+            if len(bracket_stack) <= 0:
+                return ValueError('unmatched ]')
             corresponding_bracket[num] = bracket_stack[-1]
             corresponding_bracket[bracket_stack[-1]] = num
             bracket_stack.pop()
-    assert len(bracket_stack) == 0, 'unmatched ['
+    if len(bracket_stack) != 0:
+        raise ValueError('unmatched [')
 
     while pointer < len(code):
         if code[pointer] == '>':
