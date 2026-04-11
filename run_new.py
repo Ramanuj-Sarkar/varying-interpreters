@@ -1,6 +1,8 @@
 # runs language from https://esolangs.org/wiki/New on 21 December 2023
 # textfile indicates whether the string is a textfile
-def run_new_21122023(rawcode: str, textfile=False) -> None:
+# runs language from https://esolangs.org/wiki/New on 21 December 2023
+# textfile indicates whether the string is a textfile
+def run_newlang(rawcode: str, textfile=False) -> None:
     pointer = 0  # for instructions
     location = 0  # for tape
     tape = [0]
@@ -31,7 +33,7 @@ def run_new_21122023(rawcode: str, textfile=False) -> None:
         elif code[pointer] == '~':
             tape[location] -= 1
         elif code[pointer] == 'O':
-            print(chr(tape[location]), end='')
+            print(chr(tape[location] % 1114112), end='')
         elif code[pointer] == '!':
             if location == len(tape):
                 raise KeyError("There is no next cell for ! to add from.")
