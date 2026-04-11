@@ -20,7 +20,8 @@ def run_tttt(data: str, textfile: False) -> None:
             in_comment = True
             comment_queue.append(num)
         elif char == 'l':
-            assert len(comment_queue) > 0, 'unmatched l'
+            if len(comment_queue) <= 0:
+                raise ValueError('unmatched l')
             corresponding_thing[num] = comment_queue[0]
             corresponding_thing[comment_queue[0]] = num
             comment_queue = comment_queue[1:]
@@ -29,12 +30,15 @@ def run_tttt(data: str, textfile: False) -> None:
             if char == 'i':
                 loop_queue.append(num)
             elif char == 'j':
-                assert len(loop_queue) > 0, 'unmatched j'
+                if len(loop_queue) <= 0:
+                    raise ValueError('unmatched j')
                 corresponding_thing[num] = loop_queue[0]
                 corresponding_thing[loop_queue[0]] = num
                 loop_queue = loop_queue[1:]
-    assert len(loop_queue) == 0, 'unmatched i'
-    assert len(comment_queue) == 0, 'unmatched k'
+    if len(loop_queue) != 0:
+        raise ValueError('unmatched i')
+    if len(comment_queue) != 0:
+        raise ValueError('unmatched k')
 
     while pointer < len(code):
         if 'a' == code[pointer]:
@@ -65,5 +69,6 @@ def run_tttt(data: str, textfile: False) -> None:
                 pointer = corresponding_thing[pointer]
         elif 'k' == code[pointer]:
             pointer = corresponding_thing[pointer]
-        assert 0 <= which_var <= 2, "the pointer must always be between 0 and 2, inclusive"
+        if not (0 <= which_var <= 2):
+            raise ValueError("the pointer must always be between 0 and 2, inclusive")
         pointer += 1
