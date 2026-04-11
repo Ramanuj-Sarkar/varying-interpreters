@@ -1,6 +1,4 @@
-# runs language from https://esolangs.org/wiki/New on 21 December 2023
-# textfile indicates whether the string is a textfile
-# runs language from https://esolangs.org/wiki/New on 21 December 2023
+# runs language from https://esolangs.org/wiki/New
 # textfile indicates whether the string is a textfile
 def run_newlang(rawcode: str, textfile=False) -> None:
     pointer = 0  # for instructions
