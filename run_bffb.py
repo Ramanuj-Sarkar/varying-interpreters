@@ -13,8 +13,6 @@ def run_bffb(rawcode: str, textfile=False, starting_input='') -> None:
     else:
         code = [char for char in rawcode if char in set('+-><,.[]')]
 
-    print(code)
-
     mirror = {'+': '+',
               '-': '-',
               '>': '<',
@@ -74,4 +72,4 @@ def run_bffb(rawcode: str, textfile=False, starting_input='') -> None:
         pointer += 1
 
 if __name__ == '__main__':
-    run_bffb(",[.,][,.],")
+    run_bffb("+->,.<[-]>..<-+")
