@@ -26,7 +26,8 @@ def run_lbf(code: str, textfile=False, starting_input='') -> None:
     while pointer < len(code):
         if code[pointer] == '>':
             location += 1
-            assert location < len(tape), f'Cannot move right from position {len(tape)}'
+            if location == len(tape):
+                raise ValueError(f'Cannot move right from position {len(tape)}')
         elif code[pointer] == '<':
             if location == 0:
                 raise ValueError('Cannot move left from position 0')
