@@ -1,5 +1,5 @@
-# Based on this language: https://esolangs.org/wiki/2DFIM
-def run_2dfim(code_string, file_name=False, input_string=''):
+# Based on Version 1 of this language: https://esolangs.org/wiki/2DFIM
+def run_2dfim_v1(code_string, file_name=False, input_string=''):
     # This is the code itself.
     code = []
 
