@@ -26,6 +26,7 @@ def run_2dfim(code_string, file_name=False, input_string=''):
 
     while True:
         row, column = pointer[0], pointer[1]
+        instruction = 'x'
 
         if column < len(code[row]) and code[row][column] in '<(':
             instruction = code[row][column]
@@ -42,6 +43,7 @@ def run_2dfim(code_string, file_name=False, input_string=''):
                     pointer = ((pointer[0] + 1) % max_rows, pointer[1] - 1)
 
             if memory[1]:
+                # print("Input or output here.")
                 out = memory[3:11]
 
                 out_num = sum(2 ** (7 - power) for power, bit in enumerate(out) if bit == True)
@@ -51,7 +53,7 @@ def run_2dfim(code_string, file_name=False, input_string=''):
                         in_str = input_string[0]
                         input_string = input_string[1:]
                     else:
-                        in_str += input("Input ASCII value between 0 and 255, inclusive:")
+                        in_str += input("Input ASCII value between 1 and 255, inclusive:")
 
                     if in_str == '':
                         in_num = 0
@@ -59,8 +61,8 @@ def run_2dfim(code_string, file_name=False, input_string=''):
                         in_num = ord(in_str[0])
                         input_string += in_str[1:]
 
-                    while not 0 <= in_num <= 255:
-                        in_str = input("Input ASCII value between 0 and 255, inclusive:")
+                    while not 1 <= in_num <= 255:
+                        in_str = input("Input ASCII value between 1 and 255, inclusive:")
                         if in_str == '':
                             in_num = 0
                         else:
@@ -73,10 +75,14 @@ def run_2dfim(code_string, file_name=False, input_string=''):
                     print(chr(out_num))
                 memory[1] = False
 
+        # print(pointer)
         pointer = (pointer[0], pointer[1] + 1)
+        # print(pointer, cell, instruction)
+
         if pointer[1] == max_columns:
             if memory[cell]:
                 pointer = (pointer[0], 0)
             else:
                 break
-    return memory
+
+    return memory, cell, pointer
