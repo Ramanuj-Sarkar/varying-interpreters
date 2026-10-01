@@ -68,11 +68,14 @@ def run_2dfim_v2(code_string, file_name=False, input_string=''):
                         else:
                             in_num = ord(in_str[0])
 
+                        if 1 <= in_num <= 255:
+                            input_string += in_str[1:]
+
                     for power in range(7, -1, -1):
                         memory[10 - power] = True if in_num // 2 ** power == 1 else False
                         in_num %= 2 ** power
                 else:
-                    print(chr(out_num))
+                    print(chr(out_num),end='')
                 memory[1] = False
 
         # print(pointer)
